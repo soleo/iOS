@@ -137,21 +137,27 @@ open class WebViewController: UIViewController, WKNavigationDelegate, WKUIDelega
     }
     
     public func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
+
+        pageMonitor.log(request: navigationAction.request)
         
         guard let delegate = webEventsDelegate,
-            let url = navigationAction.request.url,
-            let documentUrl = navigationAction.request.mainDocumentURL else {
+              let url = navigationAction.request.url,
+              let documentUrl = navigationAction.request.mainDocumentURL else {
             decisionHandler(.allow)
             return
         }
         
         if delegate.webView(webView, shouldLoadUrl: url, forDocument: documentUrl) {
-            pageMonitor.add(url: url)
             decisionHandler(.allow)
-            return
+        } else {
+           decisionHandler(.cancel)
         }
+    }
+    
+    public func webView(_ webView: WKWebView, decidePolicyFor navigationResponse: WKNavigationResponse, decisionHandler: @escaping (WKNavigationResponsePolicy) -> Void) {
         
-        decisionHandler(.cancel)
+        pageMonitor.log(response: navigationResponse.response)
+        decisionHandler(.allow)
     }
     
     public func webView(_ webView: WKWebView, createWebViewWith configuration: WKWebViewConfiguration, for navigationAction: WKNavigationAction, windowFeatures: WKWindowFeatures) -> WKWebView? {

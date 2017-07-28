@@ -22,15 +22,40 @@ import Foundation
 
 public struct PageMonitor {
     
-    private(set) var urls = [URL]()
+    public private(set) var hosts = Set<String>()
     
-    mutating func add(url: URL) {
-        urls.append(url)
+    mutating func log(request: URLRequest) {
+        guard let url = request.url else { return }
+        log(visitedUrl: url)
     }
     
-    public func hosts() -> [String] {
-        return urls.filter { $0.host != nil }
-                   .map { $0.host! }
-
+    mutating func log(response: URLResponse) {
+        guard let url = response.url else { return }
+        log(visitedUrl: url)
+        
+        if let response = response as? HTTPURLResponse,
+           let headers = response.allHeaderFields as? [String: String] {
+            logCookies(fromHeaders: headers, url: url)
+        }
+    }
+    
+    private mutating func log(visitedUrl: URL) {
+        Logger.log(text: "PageMonitor monitored url \(visitedUrl)")
+        if let host = visitedUrl.host {
+            hosts.insert(host)
+        }
+    }
+    
+    private mutating func log(cookies: [HTTPCookie]) {
+        let newHosts = cookies.map { $0.domain }
+        Logger.log(text: "PageMonitor monitored cookies for hosts \(newHosts)")
+        hosts = hosts.union(newHosts)
+    }
+    
+    private mutating func logCookies(fromHeaders headers: [String: String], url: URL) {
+        let cookies = HTTPCookie.cookies(withResponseHeaderFields:headers, for: url)
+        if !cookies.isEmpty {
+            log(cookies: cookies)
+        }
     }
 }
