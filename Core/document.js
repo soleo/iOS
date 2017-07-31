@@ -34,10 +34,20 @@ var duckduckgoDocument = function () {
         }
         return null
     };
+
+    deletePageCookies = function() {
+        console.log("Deleting simple javascript cookies " + document.cookie)
+        document.cookie.split(';').forEach(function(cookie) {
+            console.log("Attempting to delete " + cookie)
+            document.cookie = cookie.trim().split('=')[0] + '=;' + 'expires=Thu, 01 Jan 1970 00:00:00 UTC;';
+        });
+        console.log("Cookies remaining" + document.cookie)
+    }
     
     return {
         getHrefFromPoint: getHrefFromPoint,
-        getHrefFromElement: getHrefFromElement
+        getHrefFromElement: getHrefFromElement,
+        deleteCookies: deletePageCookies
     };
-    
+
 }();

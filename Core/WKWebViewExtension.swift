@@ -83,4 +83,11 @@ extension WKWebView {
             completion(url)
         }
     }
+    
+    public func deletePageCookies(completion: @escaping () -> Swift.Void) {
+        let javascript = "duckduckgoDocument.deletePageCookies()"
+        evaluateJavaScript(javascript) { (error) in
+            completion()
+        }
+    }
 }

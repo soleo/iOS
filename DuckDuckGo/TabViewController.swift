@@ -69,6 +69,7 @@ class TabViewController: WebViewController {
     
     func forgetPage() {
         WebCacheManager.clear(forHosts: pageMonitor.hosts) {}
+        webView.deletePageCookies {}
     }
 
     func launchContentBlockerPopover() {
