@@ -66,6 +66,10 @@ class TabViewController: WebViewController {
         navigationController?.isNavigationBarHidden = false
         navigationController?.isToolbarHidden = false
     }
+    
+    func forgetPage() {
+        WebCacheManager.clear(forHosts:pageMonitor.hosts()) {}
+    }
 
     func launchContentBlockerPopover() {
         guard let button = navigationController?.view.viewWithTag(OmniBar.Tag.contentBlocker) else { return }

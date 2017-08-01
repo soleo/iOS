@@ -29,7 +29,9 @@ open class WebViewController: UIViewController, WKNavigationDelegate, WKUIDelega
     @IBOutlet weak var progressBar: UIProgressView!
     
     open private(set) var webView: WKWebView!
-
+    
+    open private(set) lazy var pageMonitor = PageMonitor()
+    
     public var name: String? {
         return webView.title    
     }
@@ -115,6 +117,7 @@ open class WebViewController: UIViewController, WKNavigationDelegate, WKUIDelega
     public func webView(_ webView: WKWebView, didStartProvisionalNavigation navigation: WKNavigation!) {
         favicon = nil
         showProgressIndicator()
+        pageMonitor = PageMonitor()
         webEventsDelegate?.webpageDidStartLoading()
     }
     
@@ -143,6 +146,7 @@ open class WebViewController: UIViewController, WKNavigationDelegate, WKUIDelega
         }
         
         if delegate.webView(webView, shouldLoadUrl: url, forDocument: documentUrl) {
+            pageMonitor.add(url: url)
             decisionHandler(.allow)
             return
         }
