@@ -21,7 +21,7 @@
 import WebKit
 
 extension WKWebView {
-
+    
     public static func createWebView(frame: CGRect, persistsData: Bool) -> WKWebView {
         let configuration = WKWebViewConfiguration()
         if !persistsData {
@@ -30,7 +30,17 @@ extension WKWebView {
         if #available(iOSApplicationExtension 10.0, *) {
             configuration.dataDetectorTypes = [.link, .phoneNumber]
         }
+        
         let webView = WKWebView(frame: frame, configuration: configuration)
+        
+        if let cls = object_getClass(webView.value(forKey: "browsingContextController")) {
+            let selector = NSSelectorFromString("registerSchemeForCustomProtocol:")
+            if let clsProtocol = cls as? NSObjectProtocol {
+                clsProtocol.perform(selector, with: "https")
+                clsProtocol.perform(selector, with: "http")
+            }
+        }
+        
         webView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         return webView
     }

@@ -39,8 +39,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         if let shortcutItem = launchOptions?[.shortcutItem] {
             handleShortCutItem(shortcutItem as! UIApplicationShortcutItem)
         }
+        configureNetworkListener()
         appIsLaunching = true
         return true
+    }
+    
+    private func configureNetworkListener() {
+        Foundation.URLProtocol.registerClass(URLProtocol.self)
     }
     
     func applicationDidBecomeActive(_ application: UIApplication) {
