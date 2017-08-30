@@ -19,7 +19,6 @@
 
 
 import UIKit
-import SwiftRichString
 
 class SafariSearchInstructionsViewController: UIViewController {
     
@@ -73,11 +72,6 @@ class SafariSearchInstructionsViewController: UIViewController {
 
     private func configureViews() {
         descriptionText.adjustPlainTextLineHeight(descriptionLineHeight)
-
-        let style = makeStyle()
-        instructionsSettingsText.attributedText = UserText.safariInstructionsSettings.parse()?.render(withStyles: [style])
-        instructionsNavigateText.attributedText = UserText.safariInstructionsNavigate.parse()?.render(withStyles: [style])
-        instructionsSelectText.attributedText = UserText.safariInstructionsSelect.parse()?.render(withStyles: [style])
     }
     
     private func applyTopMargin() {
@@ -87,12 +81,6 @@ class SafariSearchInstructionsViewController: UIViewController {
         let marginForVerticalCentering = (excessHeight  / 2) - SafariSearchInstructionsViewController.verticalOffset
         let minimumMargin = SafariSearchInstructionsViewController.minimumTopMargin
         topMarginConstraint.constant = marginForVerticalCentering > minimumMargin ? marginForVerticalCentering : minimumMargin
-    }
-
-    private func makeStyle() -> Style {
-        return Style("highlight") {
-            $0.color = UIColor(hex: "#333333", alpha: 1.0)
-        }
     }
 
 }
