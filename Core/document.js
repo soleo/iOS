@@ -39,5 +39,10 @@ var duckduckgoDocument = function () {
         getHrefFromPoint: getHrefFromPoint,
         getHrefFromElement: getHrefFromElement
     };
-    
 }();
+
+document.addEventListener("load", function(event) {
+      console.log("load source element: " + event["srcElement"].src)
+      console.log("load target: " + event["target"].src)
+      webkit.messageHandlers.notification.postMessage("Load source ");
+},true);

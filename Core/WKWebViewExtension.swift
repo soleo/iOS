@@ -44,6 +44,7 @@ extension WKWebView {
         }
         let webView = WKWebView(frame: frame, configuration: configuration)
         webView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+
         return webView
     }
     
