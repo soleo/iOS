@@ -56,21 +56,7 @@ public class ContentBlocker {
     }
     
     public func policy(forUrl url: URL, document documentUrl: URL) -> (tracker: Tracker?, block: Bool) {
-        guard let tracker = thirdPartyTracker(forUrl: url, document: documentUrl) else {
-            return (nil, false)
-        }
-        
-        if !configuration.enabled {
-            return (tracker, false)
-        }
-        
-        guard let host = documentUrl.host  else { return (tracker, false) }
-        if configuration.whitelisted(domain: host) {
-            return (tracker, false)
-        }
-        
-        Logger.log(text: "ContentBlocker BLOCKED \(url.absoluteString)")
-        return (tracker, true)
+        return (nil, false)
     }
     
     /**

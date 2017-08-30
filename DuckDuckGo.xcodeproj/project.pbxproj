@@ -434,6 +434,7 @@
 		F1668BCD1E798081008CBA04 /* BookmarksViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BookmarksViewController.swift; sourceTree = "<group>"; };
 		F169563F1ECC9C66009C35C9 /* ContentBlockerConfigurationStore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentBlockerConfigurationStore.swift; sourceTree = "<group>"; };
 		F16956411ECCA3D4009C35C9 /* ContentBlockerConfigurationUserDefaults.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentBlockerConfigurationUserDefaults.swift; sourceTree = "<group>"; };
+		F16D71981F56EE0F00E61C58 /* blockerList.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; name = blockerList.json; path = ../../TEST/ContentBlocker/blockerList.json; sourceTree = "<group>"; };
 		F1722BC81E8BE2AB0058AAA5 /* BookmarkStore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BookmarkStore.swift; sourceTree = "<group>"; };
 		F176699E1E40BC86003D3222 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Settings.storyboard; sourceTree = "<group>"; };
 		F17669A71E412A12003D3222 /* MockBundle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockBundle.swift; sourceTree = "<group>"; };
@@ -988,6 +989,7 @@
 				F143C32A1E4A9A2700CFDE3A /* UserInterface */,
 				F143C3311E4A9A6A00CFDE3A /* Web */,
 				F18608DE1E5E648100361C30 /* Javascript */,
+				F16D71981F56EE0F00E61C58 /* blockerList.json */,
 				F143C2E61E4A4CD400CFDE3A /* Core.h */,
 				F143C2E71E4A4CD400CFDE3A /* Info.plist */,
 			);

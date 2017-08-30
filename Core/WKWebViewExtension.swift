@@ -20,6 +20,10 @@
 
 import WebKit
 
+struct Constants {
+    static let listName = "customRules"
+}
+
 extension WKWebView {
 
     public static func createWebView(frame: CGRect, persistsData: Bool) -> WKWebView {
@@ -29,6 +33,18 @@ extension WKWebView {
         }
         if #available(iOSApplicationExtension 10.0, *) {
             configuration.dataDetectorTypes = [.link, .phoneNumber]
+        }
+        if #available(iOSApplicationExtension 11.0, *) {
+            let store = WKContentRuleListStore.default()!
+
+            let parser = AppleContentBlockerParser()
+            let trackers = ContentBlockerConfigurationUserDefaults().trackers!
+            let ruleData = try! parser.toJsonData(trackers: trackers)
+            let ruleString = String(bytes: ruleData, encoding: .utf8)
+            store.compileContentRuleList(forIdentifier: Constants.listName, encodedContentRuleList: ruleString) { list, error in
+                guard let aList = list else { return }
+                configuration.userContentController.add(aList)
+            }
         }
         let webView = WKWebView(frame: frame, configuration: configuration)
         webView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
