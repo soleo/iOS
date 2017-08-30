@@ -36,12 +36,8 @@ extension WKWebView {
         }
         if #available(iOSApplicationExtension 11.0, *) {
             let store = WKContentRuleListStore.default()!
-
-            let parser = AppleContentBlockerParser()
-            let trackers = ContentBlockerConfigurationUserDefaults().trackers!
-            let ruleData = try! parser.toJsonData(trackers: trackers)
-            let ruleString = String(bytes: ruleData, encoding: .utf8)
-            store.compileContentRuleList(forIdentifier: Constants.listName, encodedContentRuleList: ruleString) { list, error in
+            let trackers = trackersFromtFile()
+            store.compileContentRuleList(forIdentifier: Constants.listName, encodedContentRuleList: trackers) { list, error in
                 guard let aList = list else { return }
                 configuration.userContentController.add(aList)
             }
@@ -49,6 +45,19 @@ extension WKWebView {
         let webView = WKWebView(frame: frame, configuration: configuration)
         webView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         return webView
+    }
+    
+    private static func trackersFromtStore() -> String {
+        let parser = AppleContentBlockerParser()
+        let trackers = ContentBlockerConfigurationUserDefaults().trackers!
+        let ruleData = try! parser.toJsonData(trackers: trackers)
+        return String(bytes: ruleData, encoding: .utf8)!
+    }
+    
+    private static func trackersFromtFile() -> String {
+        let bundle = Bundle(for: WebViewController.self)
+        let path = bundle.path(forResource: "blockerList", ofType: "json")!
+        return try! String(contentsOfFile: path)
     }
     
     public func loadScripts() {
