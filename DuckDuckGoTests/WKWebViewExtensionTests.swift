@@ -24,12 +24,12 @@ import WebKit
 class WKWebViewExtensionTests: XCTestCase {
     
     func testWhenWebViewCreatedWithNonPersistenceThenDataStoreIsNonPersistent() {
-        let webView = WKWebView.createWebView(frame: CGRect(), persistsData: false)
+        let webView = WKWebView.createWebView(frame: CGRect(), persistsData: false, urlSchemeHandler: nil)
         XCTAssertFalse(webView.configuration.websiteDataStore.isPersistent)
     }
 
     func testWhenWebViewCreatedWithPersistenceThenDataStoreIsPersistent() {
-        let webView = WKWebView.createWebView(frame: CGRect(), persistsData: true)
+        let webView = WKWebView.createWebView(frame: CGRect(), persistsData: true, urlSchemeHandler: nil)
         XCTAssertTrue(webView.configuration.websiteDataStore.isPersistent)
     }
     

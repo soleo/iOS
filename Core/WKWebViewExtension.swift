@@ -26,7 +26,7 @@ struct Constants {
 
 extension WKWebView {
 
-    public static func createWebView(frame: CGRect, persistsData: Bool) -> WKWebView {
+    public static func createWebView(frame: CGRect, persistsData: Bool, urlSchemeHandler: NSObject?) -> WKWebView {
         let configuration = WKWebViewConfiguration()
         if !persistsData {
             configuration.websiteDataStore = WKWebsiteDataStore.nonPersistent()
@@ -35,6 +35,12 @@ extension WKWebView {
             configuration.dataDetectorTypes = [.link, .phoneNumber]
         }
         if #available(iOSApplicationExtension 11.0, *) {
+
+            if let urlSchemeHandler = urlSchemeHandler as? WKURLSchemeHandler {
+                configuration.setURLSchemeHandler(urlSchemeHandler, forURLScheme: "ddg-http")
+                configuration.setURLSchemeHandler(urlSchemeHandler, forURLScheme: "ddg-https")
+            }
+
             let store = WKContentRuleListStore.default()!
             let trackers = trackersFromtFile()
             store.compileContentRuleList(forIdentifier: Constants.listName, encodedContentRuleList: trackers) { list, error in
@@ -110,3 +116,4 @@ extension WKWebView {
         }
     }
 }
+

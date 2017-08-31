@@ -19,6 +19,7 @@
 
 import UIKit
 import WebKit
+import Alamofire
 
 open class WebViewController: UIViewController, WKNavigationDelegate, WKUIDelegate {
     
@@ -57,7 +58,14 @@ open class WebViewController: UIViewController, WKNavigationDelegate, WKUIDelega
     }
     
     public func attachWebView(persistsData: Bool) {
-        webView = WKWebView.createWebView(frame: view.bounds, persistsData: persistsData)
+
+        var urlSchemeHandler: NSObject?
+
+        if #available(iOS 11, *) {
+            urlSchemeHandler = DDGSchemeHandler()
+        }
+
+        webView = WKWebView.createWebView(frame: view.bounds, persistsData: persistsData, urlSchemeHandler: urlSchemeHandler)
         attachLongPressHandler(webView: webView)
         webView.allowsBackForwardNavigationGestures = true
         webView.addObserver(self, forKeyPath: #keyPath(WKWebView.estimatedProgress), options: .new, context: nil)
@@ -145,8 +153,20 @@ open class WebViewController: UIViewController, WKNavigationDelegate, WKUIDelega
     
     public func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
 
-        guard let url = navigationAction.request.url else {
+        guard let url = navigationAction.request.url, let scheme = url.scheme else {
             decisionHandler(.allow)
+            return
+        }
+
+        guard scheme != "http" else {
+            decisionHandler(.cancel)
+            load(url: URL(string: url.absoluteString.replacingOccurrences(of: "http://", with: "ddg-http://"))!)
+            return
+        }
+
+        guard scheme != "https" else {
+            decisionHandler(.cancel)
+            load(url: URL(string: url.absoluteString.replacingOccurrences(of: "https://", with: "ddg-https://"))!)
             return
         }
 
@@ -261,3 +281,70 @@ extension WebViewController: UIGestureRecognizerDelegate {
 }
 
 fileprivate class WebLongPressGestureRecognizer: UILongPressGestureRecognizer {}
+
+@available(iOSApplicationExtension 11.0, *)
+class DDGSchemeHandler: NSObject, WKURLSchemeHandler {
+
+    var tasksInFlight = [URL: Bool]()
+
+    public func webView(_ webView: WKWebView, start urlSchemeTask: WKURLSchemeTask) {
+        let url = urlSchemeTask.request.url!
+        let originalURL = URL(string: url.absoluteString.replacingOccurrences(of: "ddg-", with: ""))!
+        print("WKURLSchemeHandler: start", urlSchemeTask, urlSchemeTask.request, originalURL)
+
+        var newRequest = urlSchemeTask.request
+        newRequest.url =
+            // uncomment to try and load original url
+            originalURL
+
+            // uncomment so that all URLs will load this image of Taylor Swift (please don't judge me)
+            // URL(string: "http://images6.fanpop.com/image/photos/32600000/-3-taylor-swift-32676785-500-500.jpg")!
+
+        trackTask(urlSchemeTask)
+        Alamofire.request(newRequest).responseData { (responseData) in
+
+            guard let data = responseData.data else {
+                print("no data returned")
+                urlSchemeTask.didFailWithError(responseData.error!)
+                return
+            }
+
+            guard let response = responseData.response else {
+                print("no data returned")
+                urlSchemeTask.didFailWithError(responseData.error!)
+                return
+            }
+
+            print("WKURLSchemeHandler: response received", response)
+
+            guard self.isTracked(urlSchemeTask) else {
+                return
+            }
+
+            urlSchemeTask.didReceive(response)
+            urlSchemeTask.didReceive(data);
+            urlSchemeTask.didFinish()
+            self.untrackTask(urlSchemeTask)
+        }
+
+    }
+
+    public func webView(_ webView: WKWebView, stop urlSchemeTask: WKURLSchemeTask) {
+        print("WKURLSchemeHandler: stop", urlSchemeTask)
+        untrackTask(urlSchemeTask)
+    }
+
+    private func trackTask(_ urlScheme: WKURLSchemeTask) {
+        tasksInFlight[urlScheme.request.url!] = true
+    }
+
+    private func isTracked(_ urlSchemeTask: WKURLSchemeTask) -> Bool {
+        return self.tasksInFlight[urlSchemeTask.request.url!, default: false]
+    }
+
+    private func untrackTask(_ urlSchemeTask: WKURLSchemeTask) {
+        print("removing", urlSchemeTask.request.url, "from tasks in flight")
+        tasksInFlight[urlSchemeTask.request.url!] = nil
+    }
+
+}
