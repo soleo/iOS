@@ -56,7 +56,21 @@ public class ContentBlocker {
     }
     
     public func policy(forUrl url: URL, document documentUrl: URL) -> (tracker: Tracker?, block: Bool) {
-        return (nil, false)
+        guard let tracker = thirdPartyTracker(forUrl: url, document: documentUrl) else {
+            return (nil, false)
+        }
+        
+        if !configuration.enabled {
+            return (tracker, false)
+        }
+        
+        guard let host = documentUrl.host  else { return (tracker, false) }
+        if configuration.whitelisted(domain: host) {
+            return (tracker, false)
+        }
+        
+        Logger.log(text: "ContentBlocker BLOCKED \(url.absoluteString)")
+        return (tracker, true)
     }
     
     /**
@@ -66,6 +80,14 @@ public class ContentBlocker {
      - returns: tracker if the item matches a third party url in the trackers list otherwise nil
      */
     private func thirdPartyTracker(forUrl url: URL, document documentUrl: URL) -> Tracker? {
+        guard let trackers = configuration.trackers else { return nil }
+        for tracker in trackers {
+            if url.absoluteString.contains(tracker.url) && documentUrl.host != url.host {
+                Logger.log(text: "ContentBlocker tracker did DETECT tracker \(url.absoluteString)")
+                return tracker
+            }
+        }
+        Logger.log(text: "ContentBlocker tracker did NOT detect \(url.absoluteString) as a tracker")
         return nil
     }
     

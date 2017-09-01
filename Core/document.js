@@ -41,8 +41,14 @@ var duckduckgoDocument = function () {
     };
 }();
 
+document.addEventListener("beforeload", function(event) {
+   var targetSrc = event["target"].src
+   console.log("Sending beforeload message for " + targetSrc)
+   webkit.messageHandlers.beforeLoadMessage.postMessage(targetSrc);
+},true);
+
 document.addEventListener("load", function(event) {
-      console.log("load source element: " + event["srcElement"].src)
-      console.log("load target: " + event["target"].src)
-      webkit.messageHandlers.notification.postMessage("Load source ");
+    var targetSrc = event["target"].src
+    console.log("Sending load message for " + targetSrc)
+    webkit.messageHandlers.loadMessage.postMessage(targetSrc);
 },true);

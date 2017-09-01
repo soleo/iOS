@@ -29,6 +29,7 @@ public extension SiteRating {
         score += majorTrackerNetworkScore
         
         let cache =  SiteRatingCache.shared
+        Logger.log(items: "SITE RATING", httpsScore, totalItemsDetected, uniqueItemsDetected, majorTrackerNetworkScore)
         if cache.add(domain: domain, score: score) {
             return score
         }

@@ -208,24 +208,24 @@ class TabViewController: WebViewController {
     }
     
     fileprivate func shouldLoad(url: URL, forDocument documentUrl: URL) -> Bool {
-        let policy = contentBlocker.policy(forUrl: url, document: documentUrl)
-        
-        if let tracker = policy.tracker {
-            siteRating?.trackerDetected(tracker, blocked: policy.block)
-            onSiteRatingChanged()
-        }
-
-        if policy.block {
-            return false
-        }
-        
+        Logger.log(text: "SHOULD LOAD: Callback")
         if shouldOpenExternally(url: url) {
             UIApplication.shared.openURL(url)
             return false
         }
         return true
     }
-    
+
+    fileprivate func onBeforeLoadMessageReceived(urlLoaded: URL) {
+        guard let documentUrl = url else { return }
+        
+        let policy = contentBlocker.policy(forUrl: urlLoaded, document: documentUrl)
+        if let tracker = policy.tracker {
+            siteRating?.trackerDetected(tracker, blocked: policy.block)
+            onSiteRatingChanged()
+        }
+    }
+
     private func shouldOpenExternally(url: URL) -> Bool {
         return SupportedExternalURLScheme.isSupported(url: url)
     }
@@ -247,6 +247,8 @@ extension TabViewController: WebEventsDelegate {
     
     func attached(webView: WKWebView) {
         webView.loadScripts()
+        webView.configuration.userContentController.add(self, name: "beforeLoadMessage")
+        webView.configuration.userContentController.add(self, name: "loadMessage")
         webView.scrollView.delegate = self
     }
     
@@ -278,6 +280,21 @@ extension TabViewController: WebEventsDelegate {
     
     func webView(_ webView: WKWebView, didReceiveLongPressForUrl url: URL, atPoint point: Point) {
         launchLongPressMenu(atPoint: point, forUrl: url)
+    }
+}
+
+extension TabViewController: WKScriptMessageHandler {
+    public func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage) {
+        
+        guard let messageText = message.body as? String else { return }
+        if message.name == "loadMessage" {
+            Logger.log(text: "SURVIVED BLOCKER \(messageText)")
+            return
+        }
+        
+        if let url = URL(string: messageText) {
+            onBeforeLoadMessageReceived(urlLoaded: url)
+        }
     }
 }
 

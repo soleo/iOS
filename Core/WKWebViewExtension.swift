@@ -36,7 +36,7 @@ extension WKWebView {
         }
         if #available(iOSApplicationExtension 11.0, *) {
             let store = WKContentRuleListStore.default()!
-            let trackers = trackersFromtFile()
+            let trackers = trackersFromtStore()
             store.compileContentRuleList(forIdentifier: Constants.listName, encodedContentRuleList: trackers) { list, error in
                 guard let aList = list else { return }
                 configuration.userContentController.add(aList)

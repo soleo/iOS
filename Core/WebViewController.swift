@@ -64,7 +64,6 @@ open class WebViewController: UIViewController, WKNavigationDelegate, WKUIDelega
         webView.navigationDelegate = self
         webView.uiDelegate = self
         webView.translatesAutoresizingMaskIntoConstraints = false
-        webView.configuration.userContentController.add(self, name: "notification")
         view.insertSubview(webView, at: 0)
         view.addEqualSizeConstraints(subView: webView)
         webEventsDelegate?.attached(webView: webView)
@@ -233,12 +232,7 @@ open class WebViewController: UIViewController, WKNavigationDelegate, WKUIDelega
         errorMessage.alpha = 0
         webView.alpha = 1
     }
-}
-
-extension WebViewController: WKScriptMessageHandler {
-    public func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage) {
-        Logger.log(text: "Received message \(message.name) \(message.body)")
-    }
+    
 }
 
 extension WebViewController: UIGestureRecognizerDelegate {
