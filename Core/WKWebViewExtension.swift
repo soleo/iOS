@@ -37,8 +37,18 @@ extension WKWebView {
     
     public func loadScripts() {
         load(scripts: [.document, .favicon])
+
+        if let json = DisconnectMeTrackersParser.last {
+            let bundle = Bundle(for: JavascriptLoader.self)
+            let path = bundle.path(forResource: "contentblocker", ofType: "js")!
+            let raw = try! String(contentsOfFile: path)
+            let js = raw.replacingOccurrences(of: "${rules}", with: "\(json)")
+            print("disconnect me json", DisconnectMeTrackersParser.last)
+            let script = WKUserScript(source: js, injectionTime: .atDocumentStart, forMainFrameOnly: true)
+            configuration.userContentController.addUserScript(script)
+        }
     }
-    
+
     private func load(scripts: [JavascriptLoader.Script]) {
         let javascriptLoader = JavascriptLoader()
         for script in scripts {

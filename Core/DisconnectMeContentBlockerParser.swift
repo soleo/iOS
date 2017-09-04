@@ -23,7 +23,9 @@ import SwiftyJSON
 
 
 public struct DisconnectMeTrackersParser {
-    
+
+    static var last: JSON!
+
    enum Category: String {
         case advertising = "Advertising"
         case analytics = "Analytics"
@@ -36,13 +38,25 @@ public struct DisconnectMeTrackersParser {
         guard let json = try? JSON(data: data) else {
             throw JsonError.invalidJson
         }
-        
+
         let jsonCategories = json["categories"]
         var trackers = [Tracker]()
         for (categoryName, jsonTrackers) in jsonCategories {
             guard isSupported(categoryName: categoryName) else { continue }
             try trackers.append(contentsOf: parseCategory(fromJson: jsonTrackers))
         }
+
+        var trackerJson = [String: Any]()
+        for tracker in trackers {
+            trackerJson[tracker.url] = true
+            if let parentDomain = tracker.parentDomain {
+                trackerJson[parentDomain] = true
+            }
+        }
+
+        DisconnectMeTrackersParser.last = try! JSON(data: JSONSerialization.data(withJSONObject: trackerJson, options: .prettyPrinted))
+        print("convert", DisconnectMeTrackersParser.last)
+
         return trackers
     }
     
