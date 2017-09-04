@@ -19,6 +19,7 @@
 
 
 import WebKit
+import SwiftyJSON
 
 extension WKWebView {
 
@@ -38,15 +39,28 @@ extension WKWebView {
     public func loadScripts() {
         load(scripts: [.document, .favicon])
 
-        if let json = DisconnectMeTrackersParser.last {
-            let bundle = Bundle(for: JavascriptLoader.self)
-            let path = bundle.path(forResource: "contentblocker", ofType: "js")!
-            let raw = try! String(contentsOfFile: path)
-            let js = raw.replacingOccurrences(of: "${rules}", with: "\(json)")
-            print("disconnect me json", DisconnectMeTrackersParser.last)
-            let script = WKUserScript(source: js, injectionTime: .atDocumentStart, forMainFrameOnly: true)
-            configuration.userContentController.addUserScript(script)
+        /*
+        guard let trackers = TrackerLoader.shared.storedTrackers else {
+            return
         }
+
+        var trackerUrls = [String: Any]()
+        for tracker in trackers {
+            trackerUrls[tracker.url] = true
+            if let parentDomain = tracker.parentDomain {
+                trackerUrls[parentDomain] = true
+            }
+        }
+
+        let json = try! JSON(data: JSONSerialization.data(withJSONObject: trackerUrls, options: .prettyPrinted))
+        let bundle = Bundle(for: JavascriptLoader.self)
+        let path = bundle.path(forResource: "contentblocker", ofType: "js")!
+        let raw = try! String(contentsOfFile: path)
+        let js = raw.replacingOccurrences(of: "${rules}", with: "\(json)")
+        let script = WKUserScript(source: js, injectionTime: .atDocumentStart, forMainFrameOnly: false)
+        configuration.userContentController.addUserScript(script)
+         */
+
     }
 
     private func load(scripts: [JavascriptLoader.Script]) {

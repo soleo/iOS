@@ -54,4 +54,11 @@ public class Tracker: NSObject, NSCoding {
     public override var hashValue: Int {
         return url.hashValue ^ (parentDomain?.hashValue ?? 0)
     }
+
+    public override var description: String {
+        get {
+            return "\(url) -> \(parentDomain ?? "<none>")"
+        }
+    }
+
 }
