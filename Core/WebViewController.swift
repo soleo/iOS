@@ -189,10 +189,12 @@ open class WebViewController: UIViewController, WKNavigationDelegate, WKUIDelega
     }
     
     private func showProgressIndicator() {
+        print(Date().timeIntervalSince1970, "showProgressIndicator")
         progressBar.alpha = 1
     }
     
     private func hideProgressIndicator() {
+        print(Date().timeIntervalSince1970, "hideProgressIndicator")
         UIView.animate(withDuration: 1) {
             self.progressBar.alpha = 0
         }

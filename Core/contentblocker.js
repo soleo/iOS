@@ -20,6 +20,15 @@ Javascript blocks:
 var blocked = []
 var rules = ${rules}
 
+var count = 0
+var size = 0
+for (var property in rules) {
+	size += property.length;
+	count++;
+}
+
+console.log(count + " rules @ " + size + "bytes");
+
 document.addEventListener("beforeload", function(event) {
 	console.log("checking: " + event.url);
 
