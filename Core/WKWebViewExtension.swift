@@ -39,7 +39,6 @@ extension WKWebView {
     public func loadScripts() {
         load(scripts: [.document, .favicon])
 
-        /*
         guard let trackers = TrackerLoader.shared.storedTrackers else {
             return
         }
@@ -59,7 +58,6 @@ extension WKWebView {
         let js = raw.replacingOccurrences(of: "${rules}", with: "\(json)")
         let script = WKUserScript(source: js, injectionTime: .atDocumentStart, forMainFrameOnly: false)
         configuration.userContentController.addUserScript(script)
-         */
 
     }
 
