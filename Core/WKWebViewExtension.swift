@@ -53,9 +53,13 @@ extension WKWebView {
 
         let json = try! JSON(data: JSONSerialization.data(withJSONObject: trackerUrls, options: .prettyPrinted))
         let bundle = Bundle(for: JavascriptLoader.self)
+
+        let easyListTextPath = bundle.path(forResource: "easylist", ofType: "txt")!
+        let easyListText = try! String(contentsOfFile: easyListTextPath).toBase64()
+
         let path = bundle.path(forResource: "contentblocker", ofType: "js")!
         let raw = try! String(contentsOfFile: path)
-        let js = raw.replacingOccurrences(of: "${rules}", with: "\(json)")
+        let js = raw.replacingOccurrences(of: "${rules}", with: "\(json)").replacingOccurrences(of: "${easylist_text}", with: easyListText)
         let script = WKUserScript(source: js, injectionTime: .atDocumentStart, forMainFrameOnly: false)
         configuration.userContentController.addUserScript(script)
 
@@ -106,3 +110,20 @@ extension WKWebView {
         }
     }
 }
+
+
+fileprivate extension String {
+
+    func fromBase64() -> String? {
+        guard let data = Data(base64Encoded: self) else {
+            return nil
+        }
+
+        return String(data: data, encoding: .utf8)
+    }
+
+    func toBase64() -> String {
+        return Data(self.utf8).base64EncodedString()
+    }
+}
+

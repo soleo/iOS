@@ -17,7 +17,37 @@ Javascript blocks:
 
 */
 
-console.log(ABP)
+decodeBase64 = function(s) {
+    var e={},i,b=0,c,x,l=0,a,r='',w=String.fromCharCode,L=s.length;
+    var A="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
+    for(i=0;i<64;i++){e[A.charAt(i)]=i;}
+    for(x=0;x<L;x++){
+        c=e[s.charAt(x)];b=(b<<6)+c;l+=6;
+        while(l>=8){((a=(b>>>(l-=8))&0xff)||(x<(L-2)))&&(r+=w(a));}
+    }
+    return r;
+};
+
+let easyListTxt = decodeBase64("${easylist_text}")
+
+// let easyListTxt = function() {
+// 
+// }.toString().slice(16,-3);
+
+// let easyListTxt = btoa("");
+
+// dump first 100 characters
+console.log(easyListTxt.slice(0, 100));
+
+let parsedFilterData = {};
+// let urlToCheck = 'http://static.tumblr.com/dhqhfum/WgAn39721/cfh_header_banner_v2.jpg';
+
+// This is the site who's URLs are being checked, not the domain of the URL being checked.
+// let currentPageDomain = 'slashdot.org';
+
+ABPFilterParser.parse(easyListTxt, parsedFilterData);
+// ABPFilterParser.parse(someOtherListOfFilters, parsedFilterData);
+
 
 var blocked = []
 var rules = ${rules}
@@ -35,6 +65,16 @@ document.addEventListener("beforeload", function(event) {
 	console.log("checking: " + event.url);
 
 	try {
+
+      if (ABPFilterParser.matches(parsedFilterData, event.url, {
+                                  domain: document.location.hostname,
+                                  elementTypeMaskMap: ABPFilterParser.elementTypeMaskMap,
+                                  })) {
+        console.log('ABP You should block this URL!');
+      } else {
+        console.log('ABP You should NOT block this URL!');
+      }
+
 		var url = new URL(event.url);
 		var hostnameParts = url.hostname.split(".");
 		var max = hostnameParts.length;
@@ -42,7 +82,7 @@ document.addEventListener("beforeload", function(event) {
 		for (var i = max - 2; i >= 0; i--) {
 			var hostname = hostnameParts.slice(i, max).join(".");
 
-			console.log("\tchecking: " + hostname);
+			console.log("\tdiscconect me checking: " + hostname);
 			if (rules[hostname]) {
 				console.warn("blocked: " + event.url);
 				blocked.push(event.url);
@@ -53,7 +93,7 @@ document.addEventListener("beforeload", function(event) {
 		}
 
 	} catch (err) {
-		console.log("error checking " + event.url)		
+		console.log("error checking " + event.url + "\n" + err)		
 	}
 
 }, true);
