@@ -30,11 +30,11 @@ public class JavascriptLoader {
         case abpfilter = "abp-filter-parser-packed"
     }
     
-    public func load(_ script: Script, withController controller: WKUserContentController) {
+    public func load(_ script: Script, withController controller: WKUserContentController, forMainFrameOnly: Bool = true) {
         let bundle = Bundle(for: JavascriptLoader.self)
         let path = bundle.path(forResource: script.rawValue, ofType: "js")!
         let scriptString = try! String(contentsOfFile: path)
-        let script = WKUserScript(source: scriptString, injectionTime: .atDocumentStart, forMainFrameOnly: true)
+        let script = WKUserScript(source: scriptString, injectionTime: .atDocumentStart, forMainFrameOnly: forMainFrameOnly)
         controller.addUserScript(script)
     }
 }

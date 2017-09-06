@@ -70,9 +70,9 @@ document.addEventListener("beforeload", function(event) {
                                   domain: document.location.hostname,
                                   elementTypeMaskMap: ABPFilterParser.elementTypeMaskMap,
                                   })) {
-        console.log('ABP You should block this URL!');
+        console.log('ABP You should block ' + event.url);
       } else {
-        console.log('ABP You should NOT block this URL!');
+        console.log('ABP You should NOT block ' + event.url);
       }
 
 		var url = new URL(event.url);

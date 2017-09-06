@@ -37,7 +37,8 @@ extension WKWebView {
     }
     
     public func loadScripts() {
-        load(scripts: [.document, .favicon, .abpfilter ])
+        load(scripts: [.document, .favicon ])
+        load(scripts: [.abpfilter ], forMainFrameOnly: false)
 
         guard let trackers = TrackerLoader.shared.storedTrackers else {
             return
@@ -65,10 +66,10 @@ extension WKWebView {
 
     }
 
-    private func load(scripts: [JavascriptLoader.Script]) {
+    private func load(scripts: [JavascriptLoader.Script], forMainFrameOnly: Bool = true) {
         let javascriptLoader = JavascriptLoader()
         for script in scripts {
-            javascriptLoader.load(script, withController: configuration.userContentController)
+            javascriptLoader.load(script, withController: configuration.userContentController, forMainFrameOnly: forMainFrameOnly)
         }
     }
     
