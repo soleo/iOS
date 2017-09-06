@@ -37,7 +37,7 @@ extension WKWebView {
     }
     
     public func loadScripts() {
-        load(scripts: [.document, .favicon])
+        load(scripts: [.document, .favicon, .abpfilter ])
 
         guard let trackers = TrackerLoader.shared.storedTrackers else {
             return

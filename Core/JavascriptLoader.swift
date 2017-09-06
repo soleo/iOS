@@ -27,6 +27,7 @@ public class JavascriptLoader {
     public enum Script: String {
         case document
         case favicon
+        case abpfilter = "abp-filter-parser-packed"
     }
     
     public func load(_ script: Script, withController controller: WKUserContentController) {

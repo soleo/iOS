@@ -11,6 +11,7 @@
 		84E3419B1E2F7EFB00BDBA6F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 84E341991E2F7EFB00BDBA6F /* Main.storyboard */; };
 		84E341A01E2F7EFB00BDBA6F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 84E3419E1E2F7EFB00BDBA6F /* LaunchScreen.storyboard */; };
 		850E94181F5D86F30041E6F8 /* contentblocker.js in Resources */ = {isa = PBXBuildFile; fileRef = 850E94171F5D86F30041E6F8 /* contentblocker.js */; };
+		854A17A61F60705700FF1222 /* abp-filter-parser-packed.js in Resources */ = {isa = PBXBuildFile; fileRef = 854A17A51F60705700FF1222 /* abp-filter-parser-packed.js */; };
 		85782E261F33E24900313000 /* UserText.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85782E251F33E24900313000 /* UserText.swift */; };
 		857A07A91F3AE3800035EFF4 /* SwiftRichString.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 857A07A81F3AE3800035EFF4 /* SwiftRichString.framework */; };
 		859151E91F543C7500F5FB53 /* SimulatorStatusMagiciOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 859151E81F543C7500F5FB53 /* SimulatorStatusMagiciOS.framework */; };
@@ -310,6 +311,7 @@
 		84E341A61E2F7EFB00BDBA6F /* UnitTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = UnitTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		84E341AC1E2F7EFB00BDBA6F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		850E94171F5D86F30041E6F8 /* contentblocker.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = contentblocker.js; sourceTree = "<group>"; };
+		854A17A51F60705700FF1222 /* abp-filter-parser-packed.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; name = "abp-filter-parser-packed.js"; path = "js-scripts/build/abp-filter-parser-packed.js"; sourceTree = SOURCE_ROOT; };
 		85782E251F33E24900313000 /* UserText.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserText.swift; sourceTree = "<group>"; };
 		857A07A81F3AE3800035EFF4 /* SwiftRichString.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftRichString.framework; path = Carthage/Build/iOS/SwiftRichString.framework; sourceTree = "<group>"; };
 		857AEF7F1F4F2AE9003B84A1 /* AppScreenshots.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AppScreenshots.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -1214,6 +1216,7 @@
 		F18608DE1E5E648100361C30 /* Javascript */ = {
 			isa = PBXGroup;
 			children = (
+				854A17A51F60705700FF1222 /* abp-filter-parser-packed.js */,
 				F18608DF1E5E649400361C30 /* document.js */,
 				F10307671E7D67BA0059FEC7 /* favicon.js */,
 				850E94171F5D86F30041E6F8 /* contentblocker.js */,
@@ -1785,6 +1788,7 @@
 				F18608E01E5E649400361C30 /* document.js in Resources */,
 				F10307681E7D67BA0059FEC7 /* favicon.js in Resources */,
 				850E94181F5D86F30041E6F8 /* contentblocker.js in Resources */,
+				854A17A61F60705700FF1222 /* abp-filter-parser-packed.js in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

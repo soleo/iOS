@@ -17,6 +17,8 @@ Javascript blocks:
 
 */
 
+console.log(ABP)
+
 var blocked = []
 var rules = ${rules}
 
