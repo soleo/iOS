@@ -28,22 +28,22 @@ decodeBase64 = function(s) {
     return r;
 };
 
-let easyListTxt = decodeBase64("${easylist_text}")
+var easyListTxt = decodeBase64("${easylist_text}")
 
-// let easyListTxt = function() {
+// var easyListTxt = function() {
 // 
 // }.toString().slice(16,-3);
 
-// let easyListTxt = btoa("");
+// var easyListTxt = btoa("");
 
 // dump first 100 characters
 console.log(easyListTxt.slice(0, 100));
 
-let parsedFilterData = {};
-// let urlToCheck = 'http://static.tumblr.com/dhqhfum/WgAn39721/cfh_header_banner_v2.jpg';
+var parsedFilterData = {};
+// var urlToCheck = 'http://static.tumblr.com/dhqhfum/WgAn39721/cfh_header_banner_v2.jpg';
 
 // This is the site who's URLs are being checked, not the domain of the URL being checked.
-// let currentPageDomain = 'slashdot.org';
+// var currentPageDomain = 'slashdot.org';
 
 ABPFilterParser.parse(easyListTxt, parsedFilterData);
 // ABPFilterParser.parse(someOtherListOfFilters, parsedFilterData);
