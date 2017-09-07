@@ -115,6 +115,10 @@ extension URL {
     }
     
     private static func isValidHost(_ host: String) -> Bool {
+        if host == "localhost" {
+            return true
+        }
+        
         // from https://stackoverflow.com/a/25717506/73479
         let hostNameRegex = "(((?!-)[A-Za-z0-9-]{1,63}(?<!-)\\.)+[A-Za-z]{2,6})"
 

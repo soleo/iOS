@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		83DCB27E1F61846B00727BE5 /* IntegrationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83DCB27D1F61846B00727BE5 /* IntegrationTests.swift */; };
 		84E341961E2F7EFB00BDBA6F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84E341951E2F7EFB00BDBA6F /* AppDelegate.swift */; };
 		84E3419B1E2F7EFB00BDBA6F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 84E341991E2F7EFB00BDBA6F /* Main.storyboard */; };
 		84E341A01E2F7EFB00BDBA6F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 84E3419E1E2F7EFB00BDBA6F /* LaunchScreen.storyboard */; };
@@ -228,6 +229,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		83DCB2801F61846B00727BE5 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 84E3418A1E2F7EFB00BDBA6F /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 84E341911E2F7EFB00BDBA6F;
+			remoteInfo = DuckDuckGo;
+		};
 		84E341A71E2F7EFB00BDBA6F /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 84E3418A1E2F7EFB00BDBA6F /* Project object */;
@@ -304,6 +312,10 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		83DCB27B1F61846B00727BE5 /* IntegrationTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = IntegrationTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		83DCB27D1F61846B00727BE5 /* IntegrationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntegrationTests.swift; sourceTree = "<group>"; };
+		83DCB27F1F61846B00727BE5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		83DCB28A1F61F94C00727BE5 /* IntegrationTests */ = {isa = PBXFileReference; lastKnownFileType = folder; path = IntegrationTests; sourceTree = "<group>"; };
 		84E341921E2F7EFB00BDBA6F /* DuckDuckGo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DuckDuckGo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		84E341951E2F7EFB00BDBA6F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		84E3419A1E2F7EFB00BDBA6F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -548,6 +560,13 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		83DCB2781F61846B00727BE5 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		84E3418F1E2F7EFB00BDBA6F /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -614,6 +633,16 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		83DCB27C1F61846B00727BE5 /* IntegrationTests */ = {
+			isa = PBXGroup;
+			children = (
+				83DCB27D1F61846B00727BE5 /* IntegrationTests.swift */,
+				83DCB28A1F61F94C00727BE5 /* IntegrationTests */,
+				83DCB27F1F61846B00727BE5 /* Info.plist */,
+			);
+			path = IntegrationTests;
+			sourceTree = "<group>";
+		};
 		84E341891E2F7EFB00BDBA6F = {
 			isa = PBXGroup;
 			children = (
@@ -625,6 +654,7 @@
 				F12810A01EB35B5300F95E4E /* ContentBlockerExtension */,
 				84E341A91E2F7EFB00BDBA6F /* UnitTests */,
 				857AEF801F4F2AE9003B84A1 /* AppScreenshots */,
+				83DCB27C1F61846B00727BE5 /* IntegrationTests */,
 				F1AA545F1E48D90700223211 /* Frameworks */,
 				84E341931E2F7EFB00BDBA6F /* Products */,
 			);
@@ -640,6 +670,7 @@
 				F143C2E41E4A4CD400CFDE3A /* Core.framework */,
 				F128109F1EB35B5300F95E4E /* ContentBlockerExtension.appex */,
 				857AEF7F1F4F2AE9003B84A1 /* AppScreenshots.xctest */,
+				83DCB27B1F61846B00727BE5 /* IntegrationTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -698,8 +729,8 @@
 			isa = PBXGroup;
 			children = (
 				85ED111F1F50B58C00A7FBCE /* AppScreenshotsUITests.swift */,
-				85ED11201F50B58C00A7FBCE /* Info.plist */,
 				85ED11211F50B58C00A7FBCE /* SnapshotHelper.swift */,
+				85ED11201F50B58C00A7FBCE /* Info.plist */,
 			);
 			path = AppScreenshots;
 			sourceTree = "<group>";
@@ -1507,6 +1538,24 @@
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
+		83DCB27A1F61846B00727BE5 /* IntegrationTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 83DCB2841F61846B00727BE5 /* Build configuration list for PBXNativeTarget "IntegrationTests" */;
+			buildPhases = (
+				83DCB2771F61846B00727BE5 /* Sources */,
+				83DCB2781F61846B00727BE5 /* Frameworks */,
+				83DCB2791F61846B00727BE5 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				83DCB2811F61846B00727BE5 /* PBXTargetDependency */,
+			);
+			name = IntegrationTests;
+			productName = IntegrationTests;
+			productReference = 83DCB27B1F61846B00727BE5 /* IntegrationTests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
 		84E341911E2F7EFB00BDBA6F /* DuckDuckGo */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 84E341BA1E2F7EFC00BDBA6F /* Build configuration list for PBXNativeTarget "DuckDuckGo" */;
@@ -1648,6 +1697,12 @@
 				LastUpgradeCheck = 0830;
 				ORGANIZATIONNAME = DuckDuckGo;
 				TargetAttributes = {
+					83DCB27A1F61846B00727BE5 = {
+						CreatedOnToolsVersion = 8.3.3;
+						DevelopmentTeam = HKE973VLUW;
+						ProvisioningStyle = Automatic;
+						TestTargetID = 84E341911E2F7EFB00BDBA6F;
+					};
 					84E341911E2F7EFB00BDBA6F = {
 						CreatedOnToolsVersion = 8.2.1;
 						DevelopmentTeam = HKE973VLUW;
@@ -1726,6 +1781,7 @@
 				F143C2E31E4A4CD400CFDE3A /* Core */,
 				84E341A51E2F7EFB00BDBA6F /* UnitTests */,
 				857AEF7E1F4F2AE9003B84A1 /* AppScreenshots */,
+				83DCB27A1F61846B00727BE5 /* IntegrationTests */,
 				F15A8B731E43A428008B8C6F /* ShareExtension */,
 				F1AA545D1E48D90700223211 /* TodayExtension */,
 				F128109E1EB35B5300F95E4E /* ContentBlockerExtension */,
@@ -1734,6 +1790,13 @@
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		83DCB2791F61846B00727BE5 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		84E341901E2F7EFB00BDBA6F /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -1877,6 +1940,14 @@
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		83DCB2771F61846B00727BE5 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				83DCB27E1F61846B00727BE5 /* IntegrationTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		84E3418E1E2F7EFB00BDBA6F /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -2096,6 +2167,11 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		83DCB2811F61846B00727BE5 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 84E341911E2F7EFB00BDBA6F /* DuckDuckGo */;
+			targetProxy = 83DCB2801F61846B00727BE5 /* PBXContainerItemProxy */;
+		};
 		84E341A81E2F7EFB00BDBA6F /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 84E341911E2F7EFB00BDBA6F /* DuckDuckGo */;
@@ -2211,6 +2287,44 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		83DCB2821F61846B00727BE5 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				DEVELOPMENT_TEAM = HKE973VLUW;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+				);
+				INFOPLIST_FILE = IntegrationTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.duckduckgo.IntegrationTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
+				TEST_TARGET_NAME = DuckDuckGo;
+			};
+			name = Debug;
+		};
+		83DCB2831F61846B00727BE5 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				DEVELOPMENT_TEAM = HKE973VLUW;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+				);
+				INFOPLIST_FILE = IntegrationTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.duckduckgo.IntegrationTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
+				TEST_TARGET_NAME = DuckDuckGo;
+			};
+			name = Release;
+		};
 		84E341B81E2F7EFC00BDBA6F /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -2600,6 +2714,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		83DCB2841F61846B00727BE5 /* Build configuration list for PBXNativeTarget "IntegrationTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				83DCB2821F61846B00727BE5 /* Debug */,
+				83DCB2831F61846B00727BE5 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		84E3418D1E2F7EFB00BDBA6F /* Build configuration list for PBXProject "DuckDuckGo" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
