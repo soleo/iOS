@@ -9,5 +9,5 @@ npm install --save-dev webpack
 
 npm install
 
-./node_modules/.bin/webpack --config ../webpack.config.js
+./node_modules/.bin/webpack --config ../js-scripts/webpack.config.js
 
