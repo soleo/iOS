@@ -97,6 +97,7 @@ class TabViewController: WebViewController {
     fileprivate func onSiteRatingChanged() {
         delegate?.tab(self, didChangeSiteRating: siteRating)
         contentBlockerPopover?.updateSiteRating(siteRating: siteRating!)
+        Logger.log(text: "Site rating: \(siteRating?.description ?? "")")
     }
 
     func launchBrowsingMenu() {
@@ -210,23 +211,32 @@ class TabViewController: WebViewController {
     }
     
     fileprivate func shouldLoad(url: URL, forDocument documentUrl: URL) -> Bool {
-        let policy = contentBlocker.policy(forUrl: url, document: documentUrl)
-        
-        if let tracker = policy.tracker {
-            siteRating?.trackerDetected(tracker, blocked: policy.block)
-            onSiteRatingChanged()
-        }
-
-        if policy.block {
-            return false
-        }
-        
         if shouldOpenExternally(url: url) {
             UIApplication.shared.openURL(url)
             return false
         }
         return true
     }
+    
+    fileprivate func onTrackerBlockedMessageReceived(blockedUrl: URL) {
+        guard let documentUrl = url else { return }
+        
+        // TODO: this is a placeholder using the old logic to grab a tracker from the disconnect list
+        //      Just a hacky test to see that we are getting stats from the web - this is a spike
+        //      branch never to be merged into prod!
+        //      When we code this for real we need to send these details down from the js component and consider
+        //      a refactor of the site rating
+        
+        let policy = contentBlocker.policy(forUrl: blockedUrl, document: documentUrl)
+        if let tracker = policy.tracker {
+            siteRating?.trackerDetected(tracker, blocked: true)
+        } else {
+            let tracker = Tracker(url: blockedUrl.absoluteString, parentDomain: nil)
+            siteRating?.trackerDetected(tracker, blocked: true)
+        }
+        onSiteRatingChanged()
+    }
+
     
     private func shouldOpenExternally(url: URL) -> Bool {
         return SupportedExternalURLScheme.isSupported(url: url)
@@ -250,6 +260,7 @@ extension TabViewController: WebEventsDelegate {
     func attached(webView: WKWebView) {
         webView.loadScripts()
         webView.scrollView.delegate = self
+        webView.configuration.userContentController.add(self, name: "trackerBlockedMessage")
     }
     
     func webpageDidStartLoading() {
@@ -282,6 +293,21 @@ extension TabViewController: WebEventsDelegate {
         launchLongPressMenu(atPoint: point, forUrl: url)
     }
 }
+
+extension TabViewController: WKScriptMessageHandler {
+    public func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage) {
+    
+        if message.name == "trackerBlockedMessage" {
+            
+            guard let text = message.body as? String, let url = URL(string: text) else {
+                return
+            }
+            
+            onTrackerBlockedMessageReceived(blockedUrl: url)
+        }
+    }
+}
+
 
 extension TabViewController: UIPopoverPresentationControllerDelegate {
     

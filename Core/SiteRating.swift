@@ -20,7 +20,7 @@
 
 import Foundation
 
-public class SiteRating {
+public class SiteRating: CustomStringConvertible {
     
     public var url: URL
     public let domain: String
@@ -68,5 +68,9 @@ public class SiteRating {
     
     public var totalItemsBlocked: Int {
         return trackersBlocked.reduce(0) { $0 + $1.value }
+    }
+    
+    public var description: String {
+        return "(URL: \(url), https: \(https), detected: \(totalItemsDetected), uniqueDetected: \(uniqueItemsDetected), majorNetwork: \(containsMajorTracker))"
     }
 }

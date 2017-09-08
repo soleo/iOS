@@ -80,14 +80,14 @@ public class ContentBlocker {
      - returns: tracker if the item matches a third party url in the trackers list otherwise nil
      */
     private func thirdPartyTracker(forUrl url: URL, document documentUrl: URL) -> Tracker? {
-//        guard let trackers = configuration.trackers else { return nil }
-//        for tracker in trackers {
-//            if url.absoluteString.contains(tracker.url) && documentUrl.host != url.host {
-//                Logger.log(text: "ContentBlocker DETECTED tracker \(url.absoluteString)")
-//                return tracker
-//            }
-//        }
-//        Logger.log(text: "ContentBlocker did NOT detect \(url.absoluteString) as a tracker")
+        guard let trackers = configuration.trackers else { return nil }
+        for tracker in trackers {
+            if url.absoluteString.contains(tracker.url) && documentUrl.host != url.host {
+                Logger.log(text: "ContentBlocker DETECTED tracker \(url.absoluteString)")
+                return tracker
+            }
+        }
+        Logger.log(text: "ContentBlocker did NOT detect \(url.absoluteString) as a tracker")
         return nil
     }
     

@@ -62,18 +62,9 @@ for (var property in rules) {
 console.log(count + " rules @ " + size + "bytes");
 
 document.addEventListener("beforeload", function(event) {
-	console.log("checking: " + event.url);
+	console.log("Checking: " + event.url);
 
 	try {
-
-      if (ABPFilterParser.matches(parsedFilterData, event.url, {
-                                  domain: document.location.hostname,
-                                  elementTypeMaskMap: ABPFilterParser.elementTypeMaskMap,
-                                  })) {
-        console.log('ABP You should block ' + event.url);
-      } else {
-        console.log('ABP You should NOT block ' + event.url);
-      }
 
 		var url = new URL(event.url);
 		var hostnameParts = url.hostname.split(".");
@@ -82,18 +73,33 @@ document.addEventListener("beforeload", function(event) {
 		for (var i = max - 2; i >= 0; i--) {
 			var hostname = hostnameParts.slice(i, max).join(".");
 
-			console.log("\tdiscconect me checking: " + hostname);
 			if (rules[hostname]) {
-				console.warn("blocked: " + event.url);
+				console.warn("Disconnect did block: " + event.url);
+                webkit.messageHandlers.trackerBlockedMessage.postMessage(event.url);
 				blocked.push(event.url);
 				event.preventDefault();
 				event.stopPropagation();
-				break;
+                return;
 			}
+            console.log("Disconnect did NOT block: " + event.url);
 		}
 
+		if (ABPFilterParser.matches(parsedFilterData, event.url, {
+			domain: document.location.hostname,
+			elementTypeMaskMap: ABPFilterParser.elementTypeMaskMap,
+		})) {
+            console.warn("ABP did block: " + event.url);
+            webkit.messageHandlers.trackerBlockedMessage.postMessage(event.url);
+            blocked.push(event.url);
+            event.preventDefault();
+            event.stopPropagation();
+		} else {
+			console.log("ABP did NOT block: " + event.url);
+		}
+
+
 	} catch (err) {
-		console.log("error checking " + event.url + "\n" + err)		
+		console.log("Error " + event.url + "\n" + err)
 	}
 
 }, true);
