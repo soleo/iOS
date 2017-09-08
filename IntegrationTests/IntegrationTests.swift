@@ -10,7 +10,12 @@ import XCTest
 
 class IntegrationTests: XCTestCase {
     
+    struct PageElementIndex {
+        static let uniqueTrackerCount: UInt = 2
+    }
+    
     var app: XCUIApplication!
+    
     
     override func setUp() {
         super.setUp()
@@ -24,18 +29,28 @@ class IntegrationTests: XCTestCase {
         continueAfterFailure = true
     }
     
-    func testFindTextWebViewContent() {
+    func testThatNothingIsBlockedOnCleanPage() {
+        runTestPage(pageUrl: "http://localhost/IntegrationTests/clean.html")
+    }
+    
+    func testThatResourcesAreBlocked() {
+        runTestPage(pageUrl: "http://localhost/IntegrationTests/resourcetrackers.html")
+    }
+    
+    
+    func runTestPage(pageUrl: String) {
         
         newTab()
         
-        enterSearch("http://localhost/IntegrationTests/simpleblock.html")
+        enterSearch(pageUrl)
         
         waitForPageTitle()
         
         openContentBlocker()
         
         let popoverTrackerCount = app.tables.staticTexts["trackerCount"]
-        let webTrackerCount = app.webViews.staticTexts.element(boundBy: 4)
+        let webTrackerCount = app.webViews.staticTexts.element(boundBy: PageElementIndex.uniqueTrackerCount)
+        
         XCTAssertTrue(popoverTrackerCount.exists)
         XCTAssertTrue(webTrackerCount.exists)
         XCTAssertEqual(popoverTrackerCount.label, webTrackerCount.label)
