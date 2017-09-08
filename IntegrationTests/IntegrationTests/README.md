@@ -21,4 +21,4 @@ Save the file and exit
 Copy the test pages across:
 `sudo cp -r <project_root>/IntegrationTests /Library/WebServer/Documents/`
 
-You should now be able to naviagte to http://localhost/IntegrationTests/simpleblock.html
+You should now be able to naviagte to http://localhost/IntegrationTests/resourcetrackers.html

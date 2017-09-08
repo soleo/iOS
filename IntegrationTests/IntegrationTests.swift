@@ -30,11 +30,19 @@ class IntegrationTests: XCTestCase {
     }
     
     func testThatNothingIsBlockedOnCleanPage() {
-        runTestPage(pageUrl: "http://localhost/IntegrationTests/clean.html")
+        runTestPage(pageUrl: "http://localhost/IntegrationTests/notrackers.html")
+    }
+
+    func testThatIFramesAreBlocked() {
+        runTestPage(pageUrl: "http://localhost/IntegrationTests/iframetrackers.html")
     }
     
     func testThatResourcesAreBlocked() {
         runTestPage(pageUrl: "http://localhost/IntegrationTests/resourcetrackers.html")
+    }
+    
+    func testThatRequestsAreBlocked() {
+        runTestPage(pageUrl: "http://localhost/IntegrationTests/requesttrackers.html")
     }
     
     
