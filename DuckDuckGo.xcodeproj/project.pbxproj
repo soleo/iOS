@@ -315,7 +315,7 @@
 		83DCB27B1F61846B00727BE5 /* IntegrationTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = IntegrationTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		83DCB27D1F61846B00727BE5 /* IntegrationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntegrationTests.swift; sourceTree = "<group>"; };
 		83DCB27F1F61846B00727BE5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		83DCB28A1F61F94C00727BE5 /* IntegrationTests */ = {isa = PBXFileReference; lastKnownFileType = folder; path = IntegrationTests; sourceTree = "<group>"; };
+		83DCB28A1F61F94C00727BE5 /* TrackerPageMocks */ = {isa = PBXFileReference; lastKnownFileType = folder; path = TrackerPageMocks; sourceTree = "<group>"; };
 		84E341921E2F7EFB00BDBA6F /* DuckDuckGo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DuckDuckGo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		84E341951E2F7EFB00BDBA6F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		84E3419A1E2F7EFB00BDBA6F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -637,7 +637,7 @@
 			isa = PBXGroup;
 			children = (
 				83DCB27D1F61846B00727BE5 /* IntegrationTests.swift */,
-				83DCB28A1F61F94C00727BE5 /* IntegrationTests */,
+				83DCB28A1F61F94C00727BE5 /* TrackerPageMocks */,
 				83DCB27F1F61846B00727BE5 /* Info.plist */,
 			);
 			path = IntegrationTests;
