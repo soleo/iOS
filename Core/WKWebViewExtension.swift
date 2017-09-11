@@ -47,9 +47,6 @@ extension WKWebView {
         var trackerUrls = [String: Any]()
         for tracker in trackers {
             trackerUrls[tracker.url] = true
-            if let parentDomain = tracker.parentDomain {
-                trackerUrls[parentDomain] = true
-            }
         }
 
         let json = try! JSON(data: JSONSerialization.data(withJSONObject: trackerUrls, options: .prettyPrinted))
