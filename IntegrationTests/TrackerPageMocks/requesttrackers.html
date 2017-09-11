@@ -3,9 +3,16 @@
         <title>Test: Request tracker</title>
         <script type="text/javascript">
             var xhttp = new XMLHttpRequest();
-            xhttp.open("GET", "https://www.yahoo.com/img.png", true);
-            xhttp.send();
-        </script>
+            xhttp.onreadystatechange = function() {
+                if (this.readyState == 4 && this.status == 200) {
+                    document.getElementById("snippet").innerHTML = xhttp.responseText;
+                }
+            };
+        // Ideally we would also test that a direct tracker could not be accessed here however
+        // we run into origin restrictions
+        xhttp.open("GET", "http://localhost:8000/requesttrackers_snippet", true);
+        xhttp.send();
+       </script>
     </head>
     
     <body>
@@ -13,5 +20,6 @@
         Unique trackers: <div>1</div>
         Total trackers: <div>1</div>
         
+        <div id="snippet"></demo>
     </body>
 </html>
