@@ -295,10 +295,19 @@ extension TabViewController: WebEventsDelegate {
 }
 
 extension TabViewController: WKScriptMessageHandler {
+    
+    // TODO move this to WebViewController and use delegate to send message back
+    //      so that we are also blocking on extension
     public func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage) {
     
+        // TODO rename this to trackerDetectedMessage
         if message.name == "trackerBlockedMessage" {
             
+            // Message body json:
+            // {
+            //    "url": "someurl.com",
+            //    "blocked": true
+            // }
             guard let text = message.body as? String, let url = URL(string: text) else {
                 return
             }
