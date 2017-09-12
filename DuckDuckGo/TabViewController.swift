@@ -306,8 +306,12 @@ extension TabViewController: WKScriptMessageHandler {
             // Message body json:
             // {
             //    "url": "someurl.com",
+            //    "parentDomain:" "appnexus.com",
             //    "blocked": true
             // }
+            // Note the parent domain comes from the disconnect list and is optional.
+            //Don't include that property in the jsin is it is unavailable.
+            
             guard let text = message.body as? String, let url = URL(string: text) else {
                 return
             }
